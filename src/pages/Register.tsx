@@ -28,10 +28,15 @@ export default function Register() {
       });
 
       localStorage.setItem('playerNick', randomNick);
+      localStorage.setItem('playerEmail', email);
       localStorage.setItem('isLoggedIn', 'true');
       
       setTimeout(() => {
-        navigate('/profile');
+        if (email === 'glebakuni9@gmail.com') {
+          navigate('/admin');
+        } else {
+          navigate('/profile');
+        }
       }, 1000);
     } catch (error) {
       toast({

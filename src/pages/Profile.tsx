@@ -9,21 +9,25 @@ import Icon from '@/components/ui/icon';
 export default function Profile() {
   const navigate = useNavigate();
   const [playerNick, setPlayerNick] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const nick = localStorage.getItem('playerNick');
+    const email = localStorage.getItem('playerEmail');
     
     if (!isLoggedIn) {
       navigate('/register');
     } else {
       setPlayerNick(nick || 'Player0000');
+      setIsAdmin(email === 'glebakuni9@gmail.com');
     }
   }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('playerNick');
+    localStorage.removeItem('playerEmail');
     navigate('/');
   };
 
@@ -46,10 +50,18 @@ export default function Profile() {
       
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="flex justify-between items-center mb-8 animate-fade-in">
-          <Button variant="ghost" onClick={() => navigate('/')} className="hover:bg-primary/10">
-            <Icon name="Home" size={20} className="mr-2" />
-            Главная
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="ghost" onClick={() => navigate('/')} className="hover:bg-primary/10">
+              <Icon name="Home" size={20} className="mr-2" />
+              Главная
+            </Button>
+            {isAdmin && (
+              <Button variant="ghost" onClick={() => navigate('/admin')} className="hover:bg-destructive/10 text-destructive">
+                <Icon name="Shield" size={20} className="mr-2" />
+                Админ-панель
+              </Button>
+            )}
+          </div>
           <Button variant="ghost" onClick={handleLogout} className="hover:bg-destructive/10 hover:text-destructive">
             <Icon name="LogOut" size={20} className="mr-2" />
             Выйти
