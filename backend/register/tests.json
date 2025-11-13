@@ -1,0 +1,35 @@
+{
+  "tests": [
+    {
+      "name": "Register new player",
+      "method": "POST",
+      "body": {
+        "email": "player@example.com"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "username": "string",
+        "password": "string",
+        "email": "string",
+        "created_at": "string",
+        "message": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Register without email",
+      "method": "POST",
+      "body": {},
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "Email is required"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "OPTIONS request for CORS",
+      "method": "OPTIONS",
+      "expectedStatus": 200
+    }
+  ]
+}
